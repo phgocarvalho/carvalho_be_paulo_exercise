@@ -24,10 +24,10 @@ import static java.util.Optional.ofNullable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class MembershipDto {
 
-    @JsonProperty
+    @JsonProperty(value = "id")
     private UUID id;
 
-    @JsonProperty
+    @JsonProperty(value = "roleId")
     @Valid
     @NotNull
     @EqualsAndHashCode.Include
@@ -39,16 +39,18 @@ public class MembershipDto {
     @EqualsAndHashCode.Include
     private UUID userId;
 
-    @JsonProperty
+    @JsonProperty(value = "teamId")
     @Valid
     @NotNull
     @EqualsAndHashCode.Include
     private UUID teamId;
 
     public static MembershipDto fromModel(Membership membership) {
+
         if (membership == null) {
             return null;
         }
+
         return MembershipDto.builder()
                 .id(membership.getId())
                 .roleId(ofNullable(membership.getRole()).map(Role::getId).orElse(null))

@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @Entity
+@Table(name = "role")
 public class Role {
 
     @Id
@@ -28,7 +30,7 @@ public class Role {
     @Type(type = "uuid-char")
     private UUID id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
 }

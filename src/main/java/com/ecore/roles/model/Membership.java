@@ -1,5 +1,6 @@
 package com.ecore.roles.model;
 
+import com.ecore.roles.exception.InvalidArgumentException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,13 +12,15 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.UUID;
 
+import static java.util.Optional.ofNullable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"team_id", "user_id"}))
+@Table(name = "membership", uniqueConstraints = @UniqueConstraint(columnNames = {"team_id", "user_id"}))
 public class Membership {
 
     @Id
@@ -27,7 +30,7 @@ public class Membership {
     private UUID id;
 
     @OneToOne
-    @JoinColumn(name = "role_id", nullable = false)
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private Role role;
 
     @Column(name = "user_id", nullable = false)
@@ -36,4 +39,8 @@ public class Membership {
     @Column(name = "team_id", nullable = false)
     private UUID teamId;
 
+    public UUID getRoleIdOrElseThrow() {
+        return ofNullable(getRole()).map(Role::getId)
+                .orElseThrow(() -> new InvalidArgumentException(Role.class));
+    }
 }

@@ -20,31 +20,34 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class UserDto {
 
-    @JsonProperty
+    @JsonProperty(value = "id")
     private UUID id;
-    @JsonProperty
+
+    @JsonProperty(value = "firstName")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String firstName;
 
-    @JsonProperty
+    @JsonProperty(value = "lastName")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String lastName;
 
-    @JsonProperty
+    @JsonProperty(value = "displayName")
     private String displayName;
 
-    @JsonProperty
+    @JsonProperty(value = "avatarUrl")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String avatarUrl;
 
-    @JsonProperty
+    @JsonProperty(value = "location")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String location;
 
     public static UserDto fromModel(User user) {
+
         if (user == null) {
             return null;
         }
+
         return UserDto.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())

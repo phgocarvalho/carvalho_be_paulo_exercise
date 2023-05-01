@@ -3,10 +3,10 @@ package com.ecore.roles.web.rest;
 import com.ecore.roles.service.UsersService;
 import com.ecore.roles.web.UsersApi;
 import com.ecore.roles.web.dto.UserDto;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,32 +16,35 @@ import java.util.stream.Collectors;
 
 import static com.ecore.roles.web.dto.UserDto.fromModel;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/v1/users")
 public class UsersRestController implements UsersApi {
 
-    private final UsersService usersService;
+    private final UsersService service;
+
+    public UsersRestController(UsersService service) {
+        this.service = service;
+    }
 
     @Override
-    @PostMapping(
+    @GetMapping(
             produces = {"application/json"})
-    public ResponseEntity<List<UserDto>> getUsers() {
+    public ResponseEntity<List<UserDto>> getAll() {
         return ResponseEntity
-                .status(200)
-                .body(usersService.getUsers().stream()
+                .status(HttpStatus.OK)
+                .body(service.getAll().stream()
                         .map(UserDto::fromModel)
                         .collect(Collectors.toList()));
     }
 
     @Override
-    @PostMapping(
-            path = "/{userId}",
+    @GetMapping(
+            path = "/{id}",
             produces = {"application/json"})
-    public ResponseEntity<UserDto> getUser(
-            @PathVariable UUID userId) {
+    public ResponseEntity<UserDto> getById(
+            @PathVariable UUID id) {
         return ResponseEntity
-                .status(200)
-                .body(fromModel(usersService.getUser(userId)));
+                .status(HttpStatus.OK)
+                .body(fromModel(service.getById(id).get()));
     }
 }

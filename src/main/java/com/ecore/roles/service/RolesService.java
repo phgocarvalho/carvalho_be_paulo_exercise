@@ -3,14 +3,20 @@ package com.ecore.roles.service;
 import com.ecore.roles.model.Role;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface RolesService {
 
-    Role CreateRole(Role role);
+    Role create(Role role);
 
-    Role GetRole(UUID id);
+    Role getById(UUID id);
 
-    List<Role> GetRoles();
+    List<Role> getAll();
 
+    Optional<Role> findByName(String name);
+
+    void delete(Role role);
+
+    List<Role> getAllByUserIdAndTeamId(UUID userId, UUID teamId);
 }

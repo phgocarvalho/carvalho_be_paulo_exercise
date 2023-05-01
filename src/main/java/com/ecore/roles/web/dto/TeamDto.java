@@ -21,24 +21,26 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class TeamDto {
 
-    @JsonProperty
+    @JsonProperty(value = "id")
     private UUID id;
 
-    @JsonProperty
+    @JsonProperty(value = "name")
     private String name;
 
-    @JsonProperty
+    @JsonProperty(value = "teamLeadId")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private UUID teamLeadId;
 
-    @JsonProperty
+    @JsonProperty(value = "teamMemberIds")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<UUID> teamMemberIds;
 
     public static TeamDto fromModel(Team team) {
+
         if (team == null) {
             return null;
         }
+
         return TeamDto.builder()
                 .id(team.getId())
                 .name(team.getName())

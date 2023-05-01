@@ -2,7 +2,7 @@ package com.ecore.roles.client;
 
 import com.ecore.roles.client.model.Team;
 import com.ecore.roles.configuration.ClientsConfigurationProperties;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +12,19 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @Component
 public class TeamsClient {
 
     private final RestTemplate restTemplate;
     private final ClientsConfigurationProperties clientsConfigurationProperties;
+
+    @Autowired
+    public TeamsClient(
+            RestTemplate restTemplate,
+            ClientsConfigurationProperties clientsConfigurationProperties) {
+        this.restTemplate = restTemplate;
+        this.clientsConfigurationProperties = clientsConfigurationProperties;
+    }
 
     public ResponseEntity<Team> getTeam(UUID id) {
         return restTemplate.exchange(

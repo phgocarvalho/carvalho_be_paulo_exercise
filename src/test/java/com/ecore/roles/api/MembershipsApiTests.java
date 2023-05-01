@@ -129,7 +129,7 @@ public class MembershipsApiTests {
 
         createMembership(expectedMembership)
                 .validate(400,
-                        "Invalid 'Membership' object. The provided user doesn't belong to the provided team.");
+                        "Invalid 'Membership' object");
     }
 
     @Test

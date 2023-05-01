@@ -7,3 +7,6 @@ spring:
 clients:
   users-api-host: https://cgjresszgg.execute-api.eu-west-1.amazonaws.com/users
   teams-api-host: https://cgjresszgg.execute-api.eu-west-1.amazonaws.com/teams
+
+roles:
+  default: Developer

@@ -20,16 +20,18 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class RoleDto {
 
-    @JsonProperty
+    @JsonProperty(value = "id")
     private UUID id;
-    @JsonProperty
+    @JsonProperty(value = "name")
     @NotBlank
     private String name;
 
     public static RoleDto fromModel(Role role) {
+
         if (role == null) {
             return null;
         }
+
         return RoleDto.builder()
                 .id(role.getId())
                 .name(role.getName())

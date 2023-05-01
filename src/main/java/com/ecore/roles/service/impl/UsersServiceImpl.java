@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+
+import static java.util.Optional.ofNullable;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -19,11 +22,11 @@ public class UsersServiceImpl implements UsersService {
         this.usersClient = usersClient;
     }
 
-    public User getUser(UUID id) {
-        return usersClient.getUser(id).getBody();
+    public Optional<User> getById(UUID id) {
+        return ofNullable(usersClient.getUser(id).getBody());
     }
 
-    public List<User> getUsers() {
+    public List<User> getAll() {
         return usersClient.getUsers().getBody();
     }
 }

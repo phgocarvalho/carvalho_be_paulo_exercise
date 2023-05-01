@@ -1,5 +1,7 @@
 package com.ecore.roles.client.model;
 
+import com.ecore.roles.exception.InvalidArgumentException;
+import com.ecore.roles.model.Membership;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,15 +23,22 @@ import java.util.UUID;
 public class Team {
 
     @Id
-    @JsonProperty
+    @JsonProperty(value = "id")
     private UUID id;
 
-    @JsonProperty
+    @JsonProperty(value = "name")
     private String name;
 
-    @JsonProperty
+    @JsonProperty(value = "teamLeadId")
     private UUID teamLeadId;
 
-    @JsonProperty
+    @JsonProperty(value = "teamMemberIds")
     private List<UUID> teamMemberIds;
+
+    public void validateTeamMember(Membership membership) {
+        teamMemberIds.stream()
+                .filter(teamMemberId -> teamMemberId.equals(membership.getUserId()))
+                .findFirst()
+                .orElseThrow(() -> new InvalidArgumentException(Membership.class));
+    }
 }

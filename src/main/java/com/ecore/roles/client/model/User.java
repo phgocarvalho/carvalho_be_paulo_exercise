@@ -18,21 +18,21 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class User {
 
-    @JsonProperty
+    @JsonProperty(value = "id")
     private UUID id;
 
-    @JsonProperty
+    @JsonProperty(value = "firstName")
     private String firstName;
 
-    @JsonProperty
+    @JsonProperty(value = "lastName")
     private String lastName;
 
-    @JsonProperty
+    @JsonProperty(value = "displayName")
     private String displayName;
 
-    @JsonProperty
+    @JsonProperty(value = "avatarUrl")
     private String avatarUrl;
 
-    @JsonProperty
+    @JsonProperty(value = "location")
     private String location;
 }

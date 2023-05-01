@@ -2,7 +2,7 @@ package com.ecore.roles.api;
 
 import com.ecore.roles.model.Membership;
 import com.ecore.roles.model.Role;
-import com.ecore.roles.repository.RoleRepository;
+import com.ecore.roles.service.RolesService;
 import com.ecore.roles.utils.RestAssuredHelper;
 import com.ecore.roles.web.dto.RoleDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +13,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.ecore.roles.utils.MockUtils.mockGetTeamById;
@@ -39,7 +40,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class RolesApiTest {
 
     private final RestTemplate restTemplate;
-    private final RoleRepository roleRepository;
+    private final RolesService rolesService;
 
     private MockRestServiceServer mockServer;
 
@@ -47,17 +48,17 @@ public class RolesApiTest {
     private int port;
 
     @Autowired
-    public RolesApiTest(RestTemplate restTemplate, RoleRepository roleRepository) {
+    public RolesApiTest(RestTemplate restTemplate, RolesService rolesService) {
         this.restTemplate = restTemplate;
-        this.roleRepository = roleRepository;
+        this.rolesService = rolesService;
     }
 
     @BeforeEach
     void setUp() {
         mockServer = MockRestServiceServer.createServer(restTemplate);
         RestAssuredHelper.setUp(port);
-        Optional<Role> devOpsRole = roleRepository.findByName(DEVOPS_ROLE().getName());
-        devOpsRole.ifPresent(roleRepository::delete);
+        Optional<Role> devOpsRole = rolesService.findByName(DEVOPS_ROLE().getName());
+        devOpsRole.ifPresent(rolesService::delete);
     }
 
     @Test
@@ -138,7 +139,7 @@ public class RolesApiTest {
 
         getRole(expectedMembership.getUserId(), expectedMembership.getTeamId())
                 .statusCode(200)
-                .body("name", equalTo(expectedMembership.getRole().getName()));
+                .body("name", equalTo(List.of(expectedMembership.getRole().getName())));
     }
 
     @Test

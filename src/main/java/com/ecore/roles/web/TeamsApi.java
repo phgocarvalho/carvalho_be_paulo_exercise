@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public interface TeamsApi {
 
-    ResponseEntity<List<TeamDto>> getTeams();
+    ResponseEntity<List<TeamDto>> getAll();
 
-    ResponseEntity<TeamDto> getTeam(UUID teamId);
+    ResponseEntity<TeamDto> getById(UUID id);
 
 }

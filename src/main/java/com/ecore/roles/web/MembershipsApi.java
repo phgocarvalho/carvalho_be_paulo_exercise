@@ -8,10 +8,10 @@ import java.util.UUID;
 
 public interface MembershipsApi {
 
-    ResponseEntity<MembershipDto> assignRoleToMembership(
+    ResponseEntity<MembershipDto> assignRoleAndCreate(
             MembershipDto membership);
 
-    ResponseEntity<List<MembershipDto>> getMemberships(
+    ResponseEntity<List<MembershipDto>> getAllByRoleId(
             UUID roleId);
 
 }
